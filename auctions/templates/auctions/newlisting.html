@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% if success %}
+    <div class = "text3">
+        <h1>Listing has been created successfully</h1>
+        <h2>Create another? </h2>
+    </div>
+{% endif %}
+
+<form action="{% url 'newlisting' %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Create Listing">
+</form>
+
+{% endblock %}
