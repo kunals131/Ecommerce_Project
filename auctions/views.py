@@ -2,20 +2,22 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import fields
+from django.forms import forms
 from django.forms.forms import Form
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Comment, Category, Item_Listing, Bid
-from django.forms import ModelForm
+from django.forms import ModelForm, forms, Form
 
 from auctions import models
 
 class New_listing_form(ModelForm):
     class Meta:
         model = Item_Listing
-        fields = ['title', 'category', 'desc', 'startingbid', 'image']
+        fields = ['title', 'category', 'desc', 'startingbid', 'ImageLink']
+  
 
 class Comment_form(ModelForm):
     class Meta:
@@ -83,7 +85,6 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-@login_required
 
 def create_listing(request):
     if request.method == "POST":
@@ -93,12 +94,17 @@ def create_listing(request):
             newlisting = form.save(commit=False)
             newlisting.creator = request.user
             newlisting.save()
-        
-        return render(request,"auctions/newlisting.html", {
-            "form": New_listing_form(),
-            "success" : True
-        })
+
+            return render(request, "auctions/newlisting.html", {
+                "form" : New_listing_form(),
+                "success" : True
+            })
+        else:
+            return render(request, "auctions/newlisting.html",{
+                "form" : New_listing_form()
+            })
     else:
         return render(request, "auctions/newlisting.html", {
-            "form": New_listing_form()
-        }) 
+            "form" : New_listing_form()
+        })
+

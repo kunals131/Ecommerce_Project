@@ -18,7 +18,7 @@ class Category(models.Model):
 
 class Item_Listing(models.Model):
     title = models.CharField(max_length=64)
-    image = models.ImageField(upload_to = "images/")
+    ImageLink = models.URLField(default="https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.macedonrangeshalls.com.au%2Fimage-not-found%2F&psig=AOvVaw1uPpQ-7XrX6_JcHaaoGxeZ&ust=1627751776881000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCLiU_4Wmi_ICFQAAAAAdAAAAABAD")
     active = models.BooleanField(default=True)
     created_date = models.DateTimeField(default=timezone.now)
     desc = models.CharField(null = True, max_length=120)
